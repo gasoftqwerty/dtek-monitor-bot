@@ -1,0 +1,31 @@
+name: DTEK Light Monitor
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Каждые 30 минут
+  workflow_dispatch: # Позволяет запустить вручную через интерфейс
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4
+
+      - name: Run DTEK monitor
+        run: |
+          python dtek_monitor_new.py
+
+      - name: Save output (optional)
+        if: always()
+        run: |
+          echo "Script finished at $(date)" >> output.log
