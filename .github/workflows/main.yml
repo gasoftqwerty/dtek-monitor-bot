@@ -24,7 +24,7 @@ jobs:
       - name: Run DTEK monitor
         run: |
           python dtek_monitor_new.py
-          python send_test.py
+          # python send_test.py
 
       - name: Save output (optional)
         if: always()
